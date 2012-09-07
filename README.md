@@ -36,8 +36,8 @@ Create a cronjob to check and update your IP automatically:
 
 Example:
 
-´´´sh
+```sh
 # crontab
 */5 * * * * /usr/bin/python /home/slot/r53dd > /home/slot/r53dd.log
-
+```
 
