@@ -1,5 +1,21 @@
 import updater
 import ConfigParser
+import os
+
+
+scriptPath = os.path.dirname( __file__ )
+stdConfigPath = '/etc/r53dd'
+configFileName = 'updater.cfg'
+configFilePath = None
+
+if (os.access(scriptPath + os.sep + configFileName, os.R_OK)):
+    configFilePath = scriptPath + os.sep + configFileName
+
+if (os.access(stdConfigPath + os.sep + configFileName, os.R_OK)):
+    configFilePath = stdConfigPath + os.sep + configFileName
+
+if (configFilePath == None):
+    exit('Config file missing.')
 
 config = ConfigParser.RawConfigParser()
 config.read('updater.cfg')
