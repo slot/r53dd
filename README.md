@@ -25,11 +25,13 @@ git clone https://github.com/slot/r53dd
 
 Configure AWS keys and hosted_zone etc. in r53dd/updater.cfg (see documentation inside file)
 
+Alternatively this file can be placed under /etc/r53dd.
+
 Run the r53dd updater
 =====================
 
 ```sh
-python r53dd
+python r53dd.py
 ```
 
 Create a cronjob to check and update your IP automatically:
@@ -38,6 +40,6 @@ Example:
 
 ```sh
 # crontab
-*/5 * * * * /usr/bin/python /home/slot/r53dd > /home/slot/r53dd.log
+*/5 * * * * /usr/bin/python /home/slot/r53dd/r53dd.py > /home/slot/r53dd.log
 ```
 
