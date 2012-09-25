@@ -1,9 +1,11 @@
+# /usr/bin/python
+
 import updater
 import ConfigParser
 import os
 
 
-scriptPath = os.path.dirname( __file__ )
+scriptPath = os.path.dirname(os.path.realpath( __file__ ))
 stdConfigPath = '/etc/r53dd'
 configFileName = 'updater.cfg'
 configFilePath = None
@@ -18,7 +20,7 @@ if (configFilePath == None):
     exit('Config file missing.')
 
 config = ConfigParser.RawConfigParser()
-config.read('updater.cfg')
+config.read(configFilePath)
 
 hosted_zone = config.get('settings', 'hosted_zone')
 aws_key =  config.get('settings', 'aws_key')
