@@ -97,11 +97,8 @@ class r53dd:
         """
         ip = ''
         request_parts = self.ip_source.split("/", 1)
-        print request_parts
         request_parts +=['']*(2-len(request_parts)) 
         (host, path) = request_parts
-        print host
-        print path
         iptest = httplib.HTTPConnection(host)
         iptest.request('GET', "/%s" % path)
         response = iptest.getresponse()
