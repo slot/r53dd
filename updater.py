@@ -2,10 +2,11 @@
 from boto import route53
 import httplib
 import socket
+import re
 
 class r53dd:
 
-    def __init__(self, hosted_zone, aws_key, aws_secret, ttl = 300, hostname = None):
+    def __init__(self, hosted_zone, aws_key, aws_secret, ip_source, ttl = 300, hostname = None):
         """
         Init Route53 DynDns Client
 
@@ -28,6 +29,7 @@ class r53dd:
         self.hosted_zone = hosted_zone
         self.aws_key = aws_key
         self.aws_secret = aws_secret
+        self.ip_source = ip_source
         self.ttl = ttl
         self.hostname = hostname
 
@@ -91,16 +93,21 @@ class r53dd:
 
     def getExternalIp(self):
         """
-        Retrieve external IP Address from service ipaddr.de
+        Retrieve external IP Address from service
         """
         ip = ''
-
-        iptest = httplib.HTTPConnection('ipaddr.de')
-        iptest.request('GET', '/?plain')
+        request_parts = self.ip_source.split("/", 1)
+        print request_parts
+        request_parts +=['']*(2-len(request_parts)) 
+        (host, path) = request_parts
+        print host
+        print path
+        iptest = httplib.HTTPConnection(host)
+        iptest.request('GET', "/%s" % path)
         response = iptest.getresponse()
 
         if (response.status == 200):
-            ip = response.read()
+            ip = re.search('((\d+\.){3}(\d+))', response.read()).group(0)
 
         iptest.close()
 
